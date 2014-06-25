@@ -1,7 +1,7 @@
 {
   "name": "koa-version",
-  "version": "0.0.1",
-  "description": "Accept version middlewide in koa",
+  "version": "0.0.2",
+  "description": "Mount middlewide by accept version and querystring in koa",
   "main": "index.js",
   "keywords": [
     "koa",

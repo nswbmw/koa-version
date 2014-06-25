@@ -6,13 +6,24 @@ var debug = require('debug')('koa-version');
 var compose = require('koa-compose');
 var assert = require('assert');
 
-var versionRegExp = new RegExp('^\d.*\d$', 'i');
+var versionRegExp = /^\d+(\.\d+)*$/i;
 
 /**
  * export `version()`
  */
 
 module.exports = version;
+
+function _parseAcceptVersion(accept) {
+  var version;
+  try {
+    version = accept.match(/version=(\d+(?:\.\d+)*$)/i);
+    version = version[1];
+  } catch (err) {
+    debug('parse accept version failed >>> %s', accept);
+  }
+  return version;
+}
 
 /**
  * Mount `app` by `version`, `app`
@@ -30,7 +41,7 @@ function version(version, app) {
     version = '1';
   }
 
-  assert(!versionRegExp.test(version), 'Mount version should like `0, 0.1, 1.0.1`');
+  assert(versionRegExp.test(version), 'Mount version should like `0, 0.1, 1.0.1`');
 
   // compose
   var downstream = app.middleware
@@ -42,7 +53,14 @@ function version(version, app) {
   return function* (upstream) {
     if (!this.acceptVersion) {
       var accept = this.header.accept;
-      this.acceptVersion = _parseAcceptVersion(accept) || '1';
+      this.acceptVersion = _parseAcceptVersion(accept);
+      if (!this.acceptVersion) {
+        if (this.query.version && versionRegExp.test(this.query.version)) {
+          this.acceptVersion = this.query.version;
+        } else {
+          this.acceptVersion = '1';
+        }
+      }
     }
 
     if (version !== this.acceptVersion) {
@@ -54,16 +72,5 @@ function version(version, app) {
       yield* upstream;
     }.call(this));
   }
-
-  function _parseAcceptVersion(accept) {
-    var version;
-    try {
-      version = accept.match(/version=(\d+(?:\.\d+)*)/i);
-      version = version[1];
-    } catch (err) {
-      debug('parse accept version failed >>> %s', accept);
-    }
-    return version;
-  };
 
 }
