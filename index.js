@@ -5,7 +5,7 @@
 var debug = require('debug')('koa-version');
 var compose = require('koa-compose');
 var assert = require('assert');
-
+var semver = require('semver');
 var versionRegExp = /^\d+(\.\d+)*$/i;
 
 /**
@@ -13,6 +13,17 @@ var versionRegExp = /^\d+(\.\d+)*$/i;
  */
 
 module.exports = version;
+
+function _toSemverStr(n) {
+  if (typeof n === 'number')
+    return n + '.0.0';
+  if (typeof n === 'string')
+    if (n.indexOf('.') === -1)
+      return n + '.0.0';
+    else
+      return n;
+  return '1.0.0';
+}
 
 function _parseAcceptVersion(accept) {
   var version;
@@ -37,11 +48,8 @@ function _parseAcceptVersion(accept) {
  */
 
 function version(version, app) {
-  if (typeof version !== 'string') {
-    version = '1';
-  }
-
-  assert(versionRegExp.test(version), 'Mount version should like `0, 0.1, 1.0.1`');
+  version = _toSemverStr(version);
+  assert(semver.validRange(version), 'Mount version should like `0, 0.1, 1.0.1`');
 
   // compose
   var downstream = app.middleware
@@ -62,10 +70,9 @@ function version(version, app) {
         }
       }
     }
-
-    if (version !== this.acceptVersion) {
+    
+    if (!semver.satisfies(_toSemverStr(this.acceptVersion), version))
       return yield* upstream;
-    }
 
     debug('mount -> %s %s', this.acceptVersion, name);
     yield* downstream.call(this, function *() {

@@ -1,6 +1,6 @@
 {
   "name": "koa-version",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Mount middlewide by accept version and querystring in koa",
   "main": "index.js",
   "keywords": [
@@ -19,8 +19,9 @@
   },
   "license": "MIT",
   "dependencies": {
+    "debug": "~1.0.2",
     "koa-compose": "~2.3.0",
-    "debug": "~1.0.2"
+    "semver": "^3.0.1"
   },
   "scripts": {
     "test": "make test"
