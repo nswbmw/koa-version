@@ -19,6 +19,14 @@ var ver = require('koa-version');
 app.use(ver('1', app);
 ```
 
+Semver(Sematics Version) support
+
+```js
+var app = koa();
+var ver = require('koa-version');
+app.use(ver('1.x', app);
+```
+
 ### License
 
 MIT
