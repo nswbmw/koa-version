@@ -1,29 +1,41 @@
 {
   "name": "koa-version",
-  "version": "0.1.0",
-  "description": "Mount middlewide by accept version and querystring in koa",
+  "version": "0.2.0",
+  "description": "Mounting app by version to different router",
   "main": "index.js",
   "keywords": [
-    "koa",
-    "middleware",
-    "accept",
-    "restful",
     "version",
-    "api"
+    "route",
+    "router",
+    "koa"
   ],
-  "devDependencies": {
-    "koa": "latest",
-    "should": "^3.0.0",
-    "mocha": "^1.12.1",
-    "supertest": "~0.10.0"
-  },
   "license": "MIT",
   "dependencies": {
-    "debug": "~1.0.2",
-    "koa-compose": "~2.3.0",
-    "semver": "^3.0.1"
+    "debug": "2.1.0",
+    "koa-compose": "2.3.0",
+    "semver": "4.1.0"
+  },
+  "devDependencies": {
+    "koa": "0.13.0",
+    "koa-route": "2.4.0",
+    "mocha": "2.0.1",
+    "supertest": "0.15.0"
   },
   "scripts": {
-    "test": "make test"
+    "test": "mocha --harmony test/test.js"
+  },
+  "contributors": [
+    "lixiaojun <cn.lixiaojun@gmail.com>",
+    "Yorkie Neil <yorkiefixer@gmail.com>",
+    "nswbmw <nswbmw1992@gmail.com>"
+  ],
+  "maintainers": [
+    "lixiaojun <cn.lixiaojun@gmail.com>",
+    "Yorkie Neil <yorkiefixer@gmail.com>",
+    "nswbmw <nswbmw1992@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MangroveTech/koa-version"
   }
 }
