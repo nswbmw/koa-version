@@ -24,16 +24,6 @@
   "scripts": {
     "test": "mocha --harmony test/test.js"
   },
-  "contributors": [
-    "lixiaojun <cn.lixiaojun@gmail.com>",
-    "Yorkie Neil <yorkiefixer@gmail.com>",
-    "nswbmw <nswbmw1992@gmail.com>"
-  ],
-  "maintainers": [
-    "lixiaojun <cn.lixiaojun@gmail.com>",
-    "Yorkie Neil <yorkiefixer@gmail.com>",
-    "nswbmw <nswbmw1992@gmail.com>"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/MangroveTech/koa-version"
